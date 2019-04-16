@@ -1,7 +1,9 @@
 package pers.bootis.webhook.enhance.apps.gitlab.model
 
 import com.google.gson.annotations.SerializedName
+import pers.bootis.webhook.enhance.processor.Message
 
+@Message(app = "gitlab", model = "comment-on-code")
 class CommentOnCode {
 
     @SerializedName("object_kind")

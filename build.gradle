@@ -13,12 +13,11 @@ version "1.0-SNAPSHOT"
 sourceCompatibility = 1.8
 
 repositories {
-    maven { url "http://www.bootis.tech:8081/repository/maven-public/" }
-    maven { url "http://www.bootis.tech:8081/repository/gradle-plugin/" }
+    maven { url "http://192.168.23.100:8081/repository/maven-public/" }
+    maven { url "http://192.168.23.100.tech:8081/repository/gradle-plugin/" }
 }
 
 version = System.getProperty("version") ?: "1.0-SNAPSHOT"
-def env = System.getProperty("env") ?: "prod"
 
 ext {
     vertxVersion = "3.7.0"

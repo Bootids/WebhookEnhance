@@ -9,6 +9,7 @@ import io.vertx.ext.web.api.OperationRequest
 import io.vertx.ext.web.api.OperationResponse
 import pers.bootis.webhook.enhance.apps.gitlab.model.Push
 import pers.bootis.webhook.enhance.apps.gitlab.service.GitlabService
+import pers.bootis.webhook.enhance.db.JdbcUtil
 
 class GitlabServiceImpl : GitlabService {
 
@@ -18,6 +19,21 @@ class GitlabServiceImpl : GitlabService {
         resultHandler: Handler<AsyncResult<OperationResponse>>
     ) {
         println(request.params.getJsonObject("body").toString())
+        val client = JdbcUtil.getClient()
+        client.getConnection(Handler { res ->
+            if (res.succeeded()) {
+                val connection = res.result()
+                connection.execute("insert into model values('${request.params.getJsonObject("body")}')"
+                ) {
+                    if (it.failed()) {
+                        println(it.cause())
+                    }
+                }
+            }
+            if (res.failed()){
+                println(res.cause())
+            }
+        })
         val gson = GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .create()
