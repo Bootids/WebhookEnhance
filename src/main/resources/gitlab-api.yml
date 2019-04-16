@@ -1,0 +1,30 @@
+openapi: 3.0.0
+info:
+  title: Manage API
+  version: 1.0.0
+
+#schemes:
+#  - http:
+#      host: localhost
+#      port: 8081
+
+paths:
+  /gitlab/send:
+    post:
+      operationId: sendMessage
+      x-vertx-event-bus: transactions_manager.myapp
+      parameters:
+        - name: redirectUrl
+          in: query
+          description: Where this message redirect to
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        200:
+          description: Ok
